@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { todosApp } from './todos.reducer';
-import VisibleTodoList from './VisibleTodoList';
-import AddTodo from './AddTodo';
-import Footer from './Footer';
+import todosReducers from './reducers';
+import { AddTodo, VisibleTodoList } from './containers';
+import { Footer } from './components';
 
-const store = createStore(todosApp);
+const store = createStore(todosReducers);
 
 export default class TodoApp extends Component {
   render() {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import match from 'match';
-import TodoList from './TodoList';
 import { connect } from 'react-redux';
-import { toggleTodo } from 'todos/todos.action';
+import match from 'match';
+import { TodoList } from 'todos/components';
+import { toggleTodo } from 'todos/actions';
 
 class VisibleTodoList extends Component {
   render() {

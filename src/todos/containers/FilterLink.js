@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Link from './Link';
+import { Link } from 'todos/components';
 import { connect } from 'react-redux';
-import { setVisibilityFilter } from 'todos/todos.action';
+import { setVisibilityFilter } from 'todos/actions';
 
 class FilterLink extends Component {
   render() {
