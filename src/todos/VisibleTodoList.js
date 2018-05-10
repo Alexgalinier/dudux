@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import match from 'match';
 import TodoList from './TodoList';
 import { connect } from 'react-redux';
+import { toggleTodo } from 'todos/todos.action';
 
 class VisibleTodoList extends Component {
   render() {
@@ -23,6 +24,6 @@ export default connect(
     todos: state.todos
   }),
   dispatch => ({
-    onToggleTodo: id => () => dispatch({ type: 'TOGGLE_TODO', id })
+    onToggleTodo: id => () => dispatch(toggleTodo(id))
   })
 )(VisibleTodoList);

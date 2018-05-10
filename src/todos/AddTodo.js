@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { addTodo } from 'todos/todos.action';
 
 let AddTodo = ({ onAddTodo }) => {
   let input;
 
   const newTodoInputChange = e => {
     const key = e.which || e.keyCode;
-    if (key === 13) {
+    if (key === 13 && e.target.value !== '') {
       onAddTodo(e.target.value);
       input.value = '';
     }
@@ -26,6 +27,6 @@ let AddTodo = ({ onAddTodo }) => {
 export default connect(
   () => ({}),
   dispatch => ({
-    onAddTodo: text => dispatch({ type: 'ADD_TODO', text })
+    onAddTodo: text => dispatch(addTodo(text))
   })
 )(AddTodo);

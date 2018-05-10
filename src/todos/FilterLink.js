@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Link from './Link';
 import { connect } from 'react-redux';
+import { setVisibilityFilter } from 'todos/todos.action';
 
 class FilterLink extends Component {
   render() {
@@ -17,6 +18,6 @@ class FilterLink extends Component {
 export default connect(
   state => ({ visibilityFilter: state.visibilityFilter }),
   dispatch => ({
-    onClick: filter => () => dispatch({ type: 'SET_VISIBILITY_FILTER', filter })
+    onClick: filter => () => dispatch(setVisibilityFilter(filter))
   })
 )(FilterLink);
