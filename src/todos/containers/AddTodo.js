@@ -24,9 +24,4 @@ let AddTodo = ({ onAddTodo }) => {
   );
 };
 
-export default connect(
-  () => ({}),
-  dispatch => ({
-    onAddTodo: text => dispatch(addTodo(text))
-  })
-)(AddTodo);
+export default connect(() => ({}), { onAddTodo: addTodo })(AddTodo);

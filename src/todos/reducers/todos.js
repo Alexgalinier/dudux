@@ -21,3 +21,10 @@ export default (state = [], action) =>
     TOGGLE_TODO: () => state.map(_ => todo(_, action)),
     _: () => state
   });
+
+export const getVisibleTodos = (todos, filter) =>
+  match(filter, {
+    SHOW_ACTIVE: () => todos.filter(_ => !_.completed),
+    SHOW_COMPLETED: () => todos.filter(_ => _.completed),
+    _: () => todos
+  });

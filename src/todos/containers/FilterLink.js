@@ -8,7 +8,10 @@ class FilterLink extends Component {
     const { visibilityFilter, filter, onClick, children } = this.props;
 
     return (
-      <Link active={visibilityFilter === filter} onClick={onClick(filter)}>
+      <Link
+        active={visibilityFilter === filter}
+        onClick={() => onClick(filter)}
+      >
         {children}
       </Link>
     );
@@ -17,7 +20,7 @@ class FilterLink extends Component {
 
 export default connect(
   state => ({ visibilityFilter: state.visibilityFilter }),
-  dispatch => ({
-    onClick: filter => () => dispatch(setVisibilityFilter(filter))
-  })
+  {
+    onClick: setVisibilityFilter
+  }
 )(FilterLink);
