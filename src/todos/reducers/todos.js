@@ -1,30 +1,35 @@
-import uuidv4 from 'uuid/v4';
+import { combineReducers } from 'redux';
 import match from 'match';
+import todo from './todo';
 
-const todo = (state = {}, action) =>
+const byIds = (state = {}, action) =>
   match(action.type, {
-    ADD_TODO: () => ({
-      id: action.id !== undefined ? action.id : uuidv4(),
-      text: action.text,
-      completed: false
+    ADD_TODO: () => ({ ...state, [action.id]: todo(state[action.id], action) }),
+    TOGGLE_TODO: () => ({
+      ...state,
+      [action.id]: todo(state[action.id], action)
     }),
-    TOGGLE_TODO: () =>
-      state.id === action.id
-        ? Object.assign({}, state, { completed: !state.completed })
-        : state,
     _: () => state
   });
 
-export default (state = [], action) =>
+const allIds = (state = [], action) =>
   match(action.type, {
-    ADD_TODO: () => [...state, todo(undefined, action)],
-    TOGGLE_TODO: () => state.map(_ => todo(_, action)),
+    ADD_TODO: () => [...state, action.id],
     _: () => state
   });
 
-export const getVisibleTodos = (todos, filter) =>
-  match(filter, {
-    SHOW_ACTIVE: () => todos.filter(_ => !_.completed),
-    SHOW_COMPLETED: () => todos.filter(_ => _.completed),
-    _: () => todos
+const todos = combineReducers({ byIds, allIds });
+
+export default todos;
+
+const getAllTodos = state => state.allIds.map(_ => state.byIds[_]);
+
+export const getVisibleTodos = (state, filter) => {
+  const allTodos = getAllTodos(state);
+
+  return match(filter, {
+    SHOW_ACTIVE: () => allTodos.filter(_ => !_.completed),
+    SHOW_COMPLETED: () => allTodos.filter(_ => _.completed),
+    _: () => allTodos
   });
+};
