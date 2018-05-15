@@ -9,12 +9,21 @@ const byIds = (state = {}, action) =>
       ...state,
       [action.id]: todo(state[action.id], action)
     }),
+    RECEIVE_TODOS: () => {
+      return action.todos.reduce((list, _) => {
+        list[_.id] = _;
+        return list;
+      }, {});
+    },
     _: () => state
   });
 
 const allIds = (state = [], action) =>
   match(action.type, {
     ADD_TODO: () => [...state, action.id],
+    RECEIVE_TODOS: () => {
+      return action.todos.map(_ => _.id);
+    },
     _: () => state
   });
 

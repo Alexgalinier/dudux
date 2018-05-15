@@ -18,9 +18,22 @@ const addLoggingToDispatch = dispatch => {
   };
 };
 
+const addPromiseToDispatch = dispatch => {
+  const rawDispatch = dispatch;
+
+  return action => {
+    if (typeof action.then === 'function') {
+      return action.then(rawDispatch);
+    }
+
+    return rawDispatch(action);
+  };
+};
+
 export const store = createStore(todosReducers, savedState);
 
 store.dispatch = addLoggingToDispatch(store.dispatch);
+store.dispatch = addPromiseToDispatch(store.dispatch);
 
 store.subscribe(() => {
   saveState(store.getState());
